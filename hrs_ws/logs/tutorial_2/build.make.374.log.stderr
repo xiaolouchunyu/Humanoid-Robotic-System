@@ -1,0 +1,622 @@
+%AdawareInstPath%\prefs.ini|UserPrefChainEx[*]</pattern>
+            <pattern type="Ini">%AdawareInstPath%\prefs.ini|StartupPrefs[*]</pattern>
+            <pattern type="Ini">%AdawareInstPath%\prefs.ini|WebUpdate[*]</pattern>
+            <pattern type="Ini">%AdawareInstPath%\prefs.ini|WindowMetrics[*]</pattern>
+          </objectSet>
+        </include>
+        <locationModify script="MigXmlHelper.RelativeMove('%AdawareInstPath%','%AdawareInstPath%')">
+          <objectSet>
+            <pattern type="Ini">%AdawareInstPath%\prefs.ini|Custom[*]</pattern>
+            <pattern type="Ini">%AdawareInstPath%\prefs.ini|UserPrefChain[*]</pattern>
+            <pattern type="Ini">%AdawareInstPath%\prefs.ini|UserPrefChainEx[*]</pattern>
+            <pattern type="Ini">%AdawareInstPath%\prefs.ini|StartupPrefs[*]</pattern>
+            <pattern type="Ini">%AdawareInstPath%\prefs.ini|WebUpdate[*]</pattern>
+            <pattern type="Ini">%AdawareInstPath%\prefs.ini|WindowMetrics[*]</pattern>
+          </objectSet>
+        </locationModify>
+      </rules>
+    </role>
+  </component>
+
+  <!-- Skype 3 -->
+  <component type="Application" context="UserAndSystem">
+    <displayName _locID="migapp.Skype">Skype</displayName>
+    <environment name="GlobalEnv" />
+    <environment name="GlobalEnvX64"/>
+    <environment>
+      <variable name="SkypeExe">
+        <script>MigXmlHelper.GetStringContent("Registry","%HklmWowSoftware%\Skype\Phone [SkypePath]")</script>
+      </variable>
+    </environment>
+    <role role="Settings">
+      <detects>
+        <detect>
+          <condition>MigXmlHelper.DoesFileVersionMatch("%SkypeExe%","ProductVersion","3.*")</condition>
+        </detect>
+      </detects>
+      <rules context="User">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKCU\Software\Skype\Installer\* [*]</pattern>
+            <pattern type="Registry">HKCU\Software\Skype\Phone\UI\General\* [*]</pattern>
+            <pattern type="Registry">HKCU\Software\Skype\PluginManager\* [*]</pattern>
+            <pattern type="Registry">HKCU\Software\Skype\ProtectedStorage\* [*]</pattern>
+            <pattern type="File">%CSIDL_APPDATA%\Skype\* [*]</pattern>
+          </objectSet>
+        </include>
+        <exclude>
+          <objectSet>
+            <pattern type="Registry">HKCU\Software\Skype\PluginManager [Plugins Root]</pattern>
+          </objectSet>
+        </exclude>
+        <merge script="MigXmlHelper.SourcePriority()">
+          <objectSet>
+            <pattern type="File">%CSIDL_APPDATA%\Skype\* [*]</pattern>
+          </objectSet>
+        </merge>
+      </rules>
+    </role>
+  </component>
+
+  <!-- Google Talk 1 -->
+  <component type="Application" context="UserAndSystem">
+    <displayName _locID="migapp.GoogleTalk">Google Talk</displayName>
+    <environment name="GlobalEnv" />
+    <environment name="GlobalEnvX64"/>
+    <role role="Settings">
+      <detection>
+        <conditions>
+          <condition>MigXmlHelper.DoesObjectExist("Registry","HKCU\Software\Google\Google Talk")</condition>
+          <conditions operation="OR">
+            <!-- For XP, Vista and Win7 Compat Mode -->
+            <condition>MigXmlHelper.DoesFileVersionMatch("%ProgramFiles32bit%\Google\Google Talk\googletalk.exe","ProductVersion","1,*")</condition>
+            <!-- For Win7 -->
+            <condition>MigXmlHelper.DoesFileVersionMatch("%CSIDL_APPDATA%\Google\Google Talk\googletalk.exe","ProductVersion","1,*")</condition>
+          </conditions>
+        </conditions>
+      </detection>
+      <rules context="User">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKCU\Software\Google\Google Talk\Accounts\* [*]</pattern>
+            <pattern type="Registry">HKCU\Software\Google\Google Talk\Options\* [*]</pattern>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\Google\Google Talk\avatars\* [*]</pattern>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\Google\Google Talk\chatlogs\* [*]</pattern>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\Google\Google Talk\themes\user\* [*]</pattern>
+          </objectSet>
+        </include>
+        <merge script="MigXmlHelper.SourcePriority()">
+          <objectSet>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\Google\Google Talk\avatars\* [*]</pattern>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\Google\Google Talk\chatlogs\* [*]</pattern>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\Google\Google Talk\themes\user\* [*]</pattern>
+          </objectSet>
+        </merge>
+      </rules>
+    </role>
+  </component>
+
+  <!-- Google Picasa 3 -->
+  <component type="Application" context="UserAndSystem">
+    <displayName _locID="migapp.GooglePicasa">Google Picasa</displayName>
+    <environment name="GlobalEnv" />
+    <environment name="GlobalEnvX64"/>
+    <environment>
+      <variable name="GooglePicasaInstallPath" remap="Yes">
+        <script>MigXmlHelper.GetStringContent("Registry","%HklmWowSoftware%\Google\Picasa\Picasa2 []","0",'"','"\')</script>
+      </variable>
+    </environment>
+    <role role="Settings">
+      <detects>
+        <detect>
+          <condition>MigXmlHelper.DoesFileVersionMatch("%GooglePicasaInstallPath%\Picasa3.exe","ProductVersion","3.*")</condition>
+        </detect>
+      </detects>
+      <rules context="User">
+        <destinationCleanup>
+          <objectSet>
+            <pattern type="Registry">HKCU\Software\Google\Picasa\Picasa2\Preferences [*]</pattern>
+            <pattern type="Registry">HKCU\Software\Google\Picasa\Picasa2\Preferences\Buttons\* [*]</pattern>
+          </objectSet>
+        </destinationCleanup>
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKCU\Software\Google\Picasa\* [*]</pattern>
+          </objectSet>
+        </include>
+        <exclude>
+          <objectSet>
+            <pattern type="Registry">HKCU\Software\Google\Picasa\* [cacheroot]</pattern>
+            <pattern type="Registry">HKCU\Software\Google\Picasa\Picasa2\resvars\* [*]</pattern>
+            <pattern type="Registry">HKCU\Software\Google\Picasa\Picasa2\Runtime\* [*]</pattern>
+          </objectSet>
+        </exclude>
+      </rules>
+    </role>
+  </component>
+
+  <!-- Microsoft Office 2010 -->
+  <component context="UserAndSystem"  type="Application">
+    <displayName _locID="migapp.office14">Microsoft Office 2010</displayName>
+    <environment name="GlobalEnv"/>
+    <environment name="GlobalEnvX64"/>
+    <environment>
+      <variable name="OFFICEVERSION">
+        <text>14.0</text>
+      </variable>
+    </environment>
+    <role role="Container">
+      <detection name="Access" />
+      <detection name="Access_x64" />
+      <detection name="Excel" />
+      <detection name="Excel_x64" />
+      <detection name="OneNote" />
+      <detection name="OneNote_x64" />
+      <detection name="Outlook" />
+      <detection name="Outlook_x64" />
+      <detection name="PowerPoint" />
+      <detection name="PowerPoint_x64" />
+      <detection name="Project14" />
+      <detection name="Project14_x64" />
+      <detection name="Publisher" />
+      <detection name="Publisher_x64" />
+      <detection name="Visio" />
+      <detection name="Visio_x64" />
+      <detection name="Word" />
+      <detection name="Word_x64" />
+      <detection name="InfoPath" />
+      <detection name="InfoPath_x64" />
+      <detection name="SharePointDesigner" />
+      <detection name="SharePointDesigner_x64" />
+
+      <!-- Office 2010 Common Settings -->
+      <component context="UserAndSystem" type="Application" hidden="TRUE">
+        <displayName _locID="migapp.office14common">Office 2010 Common Settings</displayName>
+        <role role="Settings">
+          <!-- For Office 2010 -->
+          <rules>
+            <destinationCleanup>
+              <objectSet>
+                <pattern type="Registry">HKCU\software\Microsoft\Office\14.0\Common [Theme]</pattern>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\Common\Internet\* [*]</pattern>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\Common\Toolbars\* [*]</pattern>
+              </objectSet>
+            </destinationCleanup>
+            <include filter='MigXmlHelper.IgnoreIrrelevantLinks()'>
+              <objectSet>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\Common\* [*]</pattern>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\User Settings\* [*]</pattern>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\Common\* [*]</pattern>
+                <pattern type="Registry">HKCU\Software\Microsoft\Shared Tools\* [*]</pattern>
+                <pattern type="File">%CSIDL_APPDATA%\Microsoft\Office\* [*]</pattern>
+                <pattern type="File">%CSIDL_APPDATA%\Microsoft\Templates\* [*]</pattern>
+                <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\Office\14.0\* [*]</pattern>
+                <!-- Quick access toolbars -->
+                <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\Office [*.qat]</pattern>
+                <!-- Extract custom dictionaries and related files -->
+                <pattern type="File">%CSIDL_APPDATA%\Microsoft\Proof\* [*]</pattern>
+                <pattern type="File">%CSIDL_APPDATA%\Microsoft\UProof\* [*]</pattern>
+                <content filter="MigXmlHelper.ExtractSingleFile(NULL, NULL)">
+                  <objectSet>
+                    <pattern type="Registry">HKCU\Software\Microsoft\Shared Tools\Proofing Tools\*\Custom Dictionaries [*]</pattern>
+                  </objectSet>
+                </content>
+              </objectSet>
+            </include>
+            <exclude>
+              <objectSet>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\12.0\Common\Internet\NetworkStatusCache\* [*]</pattern>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\12.0\Common\Open Find\* [*]</pattern>
+              </objectSet>
+            </exclude>
+            <merge script="MigXmlHelper.SourcePriority()">
+              <objectSet>
+                <pattern type="File">%CSIDL_APPDATA%\Microsoft\Office\* [*]</pattern>
+                <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\Office\14.0\* [*]</pattern>
+                <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\Office [*.qat]</pattern>
+                <!-- Custom dictionaries -->
+                <pattern type="File">%CSIDL_APPDATA%\Microsoft\Proof\* [*]</pattern>
+                <pattern type="File">%CSIDL_APPDATA%\Microsoft\UProof\* [*]</pattern>
+                <content filter="MigXmlHelper.ExtractSingleFile(NULL, NULL)">
+                  <objectSet>
+                    <pattern type="Registry">HKCU\Software\Microsoft\Shared Tools\Proofing Tools\*\Custom Dictionaries [*]</pattern>
+                  </objectSet>
+                </content>
+              </objectSet>
+            </merge>
+          </rules>
+        </role>
+      </component>
+
+      <!-- Microsoft Office Access 2010 -->
+      <component context="UserAndSystem" type="Application">
+        <displayName _locID="migapp.office14access">Microsoft Office Access 2010</displayName>
+        <environment>
+          <variable name="OFFICEPROGRAM">
+            <text>Access</text>
+          </variable>
+        </environment>
+        <role role="Settings">
+          <detection name="Access" />
+          <detection name="Access_x64" />
+          <rules>
+            <destinationCleanup>
+              <objectSet>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\Access\Settings\* [*] </pattern>
+              </objectSet>
+            </destinationCleanup>
+            <include>
+              <objectSet>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\Access\* [*]</pattern>
+                <pattern type="File">%CSIDL_APPDATA%\Microsoft\Access\* [*]</pattern>
+              </objectSet>
+            </include>
+            <merge script="MigXmlHelper.SourcePriority()">
+              <objectSet>
+                <pattern type="File">%CSIDL_APPDATA%\Microsoft\Access\* [*]</pattern>
+              </objectSet>
+            </merge>
+          </rules>
+          <rules>
+            <include>
+              <objectSet>
+                <pattern type="File">%CSIDL_APPDATA%\Microsoft\Office [Access14.pip]</pattern>
+                <pattern type="File">%CSIDL_APPDATA%\* [*.mdw]</pattern>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\Access\* [*]</pattern>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\Access\* [*]</pattern>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\CMA\* [*]</pattern>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\Common\Toolbars\Settings\ [Microsoft Access]</pattern>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\Access\File MRU\* [*]</pattern>
+              </objectSet>
+            </include>
+            <exclude>
+              <objectSet>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\Access\Settings [MRU1]</pattern>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\Access\Settings [MRU2]</pattern>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\Access\Settings [MRU3]</pattern>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\Access\Settings [MRU4]</pattern>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\Access\Settings [MRU5]</pattern>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\Access\Settings [MRU6]</pattern>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\Access\Settings [MRU7]</pattern>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\Access\Settings [MRU8]</pattern>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\Access\Settings [MRU9]</pattern>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\Access\Settings [MRUFlags1]</pattern>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\Access\Settings [MRUFlags2]</pattern>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\Access\Settings [MRUFlags3]</pattern>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\Access\Settings [MRUFlags4]</pattern>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\Access\Settings [MRUFlags5]</pattern>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\Access\Settings [MRUFlags6]</pattern>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\Access\Settings [MRUFlags7]</pattern>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\Access\Settings [MRUFlags8]</pattern>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\Access\Settings [MRUFlags9]</pattern>
+              </objectSet>
+            </exclude>
+            <merge script="MigXmlHelper.DestinationPriority()">
+              <objectSet>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\Access\Options [Default Database Directory]</pattern>
+              </objectSet>
+            </merge>
+          </rules>
+          <rules name="Office14to15SettingsUpgrade" />
+          <rules name="Office14to15SettingsUpgrade_x64" />
+        </role>
+      </component>
+
+      <!-- Microsoft Office Excel 2010 -->
+      <component  context="UserAndSystem" type="Application">
+        <displayName _locID="migapp.office14excel">Microsoft Office Excel 2010</displayName>
+        <environment>
+          <variable name="OFFICEPROGRAM">
+            <text>Excel</text>
+          </variable>
+        </environment>
+        <role role="Settings">
+          <detection name="Excel" />
+          <detection name="Excel_x64" />
+          <rules>
+            <destinationCleanup>
+              <objectSet>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\Excel\Error Checking\* [*]</pattern>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\Excel\Internet\* [*]</pattern>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\Excel\Options\* [*]</pattern>
+              </objectSet>
+            </destinationCleanup>
+            <include>
+              <objectSet>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\Excel\* [*]</pattern>
+              </objectSet>
+            </include>
+          </rules>
+          <rules name="Office14to15SettingsUpgrade" />
+          <rules name="Office14to15SettingsUpgrade_x64" />
+        </role>
+      </component>
+
+      <!-- Microsoft Office OneNote 2010 -->
+      <component context="UserAndSystem" type="Application">
+        <displayName _locID="migapp.office14onenote">Microsoft Office OneNote 2010</displayName>
+        <environment>
+          <variable name="OneNoteCachePath">
+            <script>MigXmlHelper.GetStringContent("Registry","HKCU\Software\Microsoft\Office\14.0\OneNote\General [CachePath]")</script>
+          </variable>
+          <variable name="OFFICEPROGRAM">
+            <text>OneNote</text>
+          </variable>
+        </environment>
+        <role role="Settings">
+          <detection name="OneNote" />
+          <detection name="OneNote_x64" />
+          <rules>
+            <destinationCleanup>
+              <objectSet>
+                <pattern type="File">%OneNoteCachePath%\OneNoteOfflineCache_Files\* [*]</pattern>
+                <pattern type="File">%OneNoteCachePath% [OneNoteOfflineCache.onecache]</pattern>
+              </objectSet>
+            </destinationCleanup>
+            <include>
+              <objectSet>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\OneNote\* [*]</pattern>
+                <pattern type="File">%CSIDL_APPDATA%\Microsoft\OneNote\14.0\* [*]</pattern>
+                <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\Office [OneNote.officeUI]</pattern>
+              </objectSet>
+            </include>
+            <exclude>
+              <objectSet>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\OneNote\Options\Other [EnableAudioSearch]</pattern>
+              </objectSet>
+            </exclude>
+            <merge script="MigXmlHelper.SourcePriority()">
+              <objectSet>
+                <pattern type="File">%CSIDL_APPDATA%\Microsoft\OneNote\14.0\* [*]</pattern>
+                <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\Office [OneNote.officeUI]</pattern>
+              </objectSet>
+            </merge>
+          </rules>
+          <rules name="Office14to15SettingsUpgrade" />
+          <rules name="Office14to15SettingsUpgrade_x64" />
+        </role>
+      </component>
+
+      <!-- Microsoft Office InfoPath 2010 -->
+      <component context="UserAndSystem" type="Application">
+        <displayName _locID="migapp.office14infopath">Microsoft Office InfoPath 2010</displayName>
+        <environment>
+          <variable name="OFFICEPROGRAM">
+            <text>OneNote</text>
+          </variable>
+        </environment>
+        <role role="Settings">
+          <detection name="InfoPath" />
+          <detection name="InfoPath_x64" />
+          <rules>
+            <include>
+              <objectSet>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\InfoPath\* [*]</pattern>
+              </objectSet>
+            </include>
+            <merge script="MigXmlHelper.SourcePriority()">
+              <objectSet>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\InfoPath\* [*]</pattern>
+              </objectSet>
+            </merge>
+          </rules>
+          <rules name="Office14to15SettingsUpgrade" />
+          <rules name="Office14to15SettingsUpgrade_x64" />
+        </role>
+      </component>
+
+      <!-- Microsoft Office SharePoint Designer 2010 -->
+      <component context="UserAndSystem" type="Application">
+        <displayName _locID="migapp.office14sharepointdesigner">Microsoft SharePoint Designer 2010</displayName>
+        <environment>
+          <variable name="OFFICEPROGRAM">
+            <text>SharePointDesigner</text>
+          </variable>
+        </environment>
+        <role role="Settings">
+          <detection name="SharePointDesigner" />
+          <detection name="SharePointDesigner_x64" />
+          <rules>
+            <include>
+              <objectSet>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\SharePoint Designer\* [*]</pattern>
+              </objectSet>
+            </include>
+            <merge script="MigXmlHelper.SourcePriority()">
+              <objectSet>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\SharePoint Designer\* [*]</pattern>
+              </objectSet>
+            </merge>
+          </rules>
+          <rules name="Office14to15SettingsUpgrade" />
+          <rules name="Office14to15SettingsUpgrade_x64" />
+        </role>
+      </component>
+
+      <!-- Microsoft Office Outlook 2010 -->
+      <component context="UserAndSystem" type="Application">
+        <displayName _locID="migapp.office14outlook">Microsoft Office Outlook 2010</displayName>
+        <environment>
+          <variable name="OFFICEPROGRAM">
+            <text>Outlook</text>
+          </variable>
+          <variable name="OUTLOOKPROFILESPATH">
+            <text>HKCU\Software\Microsoft\Windows NT\CurrentVersion\Windows Messaging Subsystem\Profiles\</text>
+          </variable>
+        </environment>
+        <role role="Settings">
+          <detection name="Outlook" />
+          <detection name="Outlook_x64" />
+          <rules name="OutlookPstPab" />
+          <rules context="User">
+            <include>
+              <objectSet>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\Outlook\* [*]</pattern>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\Outlook\* [*]</pattern>
+                <pattern type="Registry">HKCU\Software\Microsoft\Exchange\* [*]</pattern>
+                <pattern type="Registry">HKCU\Software\Microsoft\Windows NT\CurrentVersion\Windows Messaging Subsystem\Profiles\* [*]</pattern>
+
+                <pattern type="File">%CSIDL_APPDATA%\Microsoft\Office [*.officeUI]</pattern>
+                <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\Office [*.officeUI]</pattern>
+                <pattern type="File">%CSIDL_APPDATA%\Microsoft\Templates\* [*]</pattern>
+                <pattern type="File">%CSIDL_APPDATA%\Microsoft\Stationery\* [*]</pattern>
+                <pattern type="File">%CSIDL_APPDATA%\Microsoft\Outlook\* [*]</pattern>
+                <pattern type="File">%CSIDL_APPDATA%\Microsoft\Signatures\* [*]</pattern>
+                <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\FORMS [frmcache.dat]</pattern>
+                <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\Outlook\* [*]</pattern>
+                <!-- Move .pst files -->
+                <content filter="MigXmlHelper.ExtractSingleFile(NULL,'NULL')">
+                  <objectSet>
+                    <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\Outlook\Search\* [*]</pattern>
+                  </objectSet>
+                </content>
+                <!-- Move journals -->
+                <content filter="MigXmlHelper.ExtractSingleFile(NULL,'%CSIDL_LOCAL_APPDATA%\Microsoft\Outlook')">
+                  <objectSet>
+                    <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\Outlook\Journal\* [*]</pattern>
+                  </objectSet>
+                </content>
+                <!-- Move .FAV files -->
+                <content filter="MigXmlHelper.ExtractSingleFile(NULL, NULL)">
+                  <objectSet>
+                    <pattern type="Registry">HKCU\Software\Microsoft\Windows NT\CurrentVersion\Windows Messaging Subsystem\Profiles\* [001e023d]</pattern>
+                    <pattern type="Registry">HKCU\Software\Microsoft\Windows NT\CurrentVersion\Windows Messaging Subsystem\Profiles\* [001f023d]</pattern>
+                  </objectSet>
+                </content>
+              </objectSet>
+            </include>
+            <exclude>
+              <objectSet>
+                <!-- We don't migrate .ost files, as recommended by the Outlook team -->
+                <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\Outlook\* [*.ost]</pattern>
+              </objectSet>
+            </exclude>
+            <merge script="MigXmlHelper.SourcePriority()">
+              <objectSet>
+                <pattern type="File">%CSIDL_APPDATA%\Microsoft\Outlook\* [*.srs]</pattern>
+                <pattern type="File">%CSIDL_APPDATA%\Microsoft\Outlook\* [*.xml]</pattern>
+                <pattern type="File">%CSIDL_APPDATA%\Microsoft\Outlook\* [*.dat]</pattern>
+                <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\FORMS [frmcache.dat]</pattern>
+              </objectSet>
+            </merge>
+            <merge script="MigXmlHelper.DestinationPriority()">
+              <objectSet>
+                <pattern type="File">%CSIDL_APPDATA%\Microsoft\Outlook [*.rwz]</pattern>
+              </objectSet>
+            </merge>
+          </rules>
+          <rules name="Office14to15SettingsUpgrade" />
+          <rules name="Office14to15SettingsUpgrade_x64" />
+        </role>
+      </component>
+
+      <!-- Microsoft Office PowerPoint 2010 -->
+      <component context="UserAndSystem" type="Application">
+        <displayName _locID="migapp.office14powerpoint">Microsoft Office PowerPoint 2010</displayName>
+        <environment>
+          <variable name="OFFICEPROGRAM">
+            <text>PowerPoint</text>
+          </variable>
+        </environment>
+        <role role="Settings">
+          <detection name="PowerPoint" />
+          <detection name="PowerPoint_x64" />
+          <rules>
+            <destinationCleanup>
+              <objectSet>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\PowerPoint\Options\* [*]</pattern>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\PowerPoint\Internet\* [*]</pattern>
+              </objectSet>
+            </destinationCleanup>
+            <include>
+              <objectSet>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\PowerPoint\* [*]</pattern>
+                <pattern type="File">%CSIDL_APPDATA%\Microsoft\PowerPoint\* [*]</pattern>
+              </objectSet>
+            </include>
+            <merge script="MigXmlHelper.SourcePriority()">
+              <objectSet>
+                <pattern type="File">%CSIDL_APPDATA%\Microsoft\PowerPoint\* [*]</pattern>
+              </objectSet>
+            </merge>
+          </rules>
+          <rules name="Office14to15SettingsUpgrade" />
+          <rules name="Office14to15SettingsUpgrade_x64" />
+        </role>
+      </component>
+
+      <!-- Microsoft Project 2010 -->
+      <component context="UserAndSystem" type="Application">
+        <displayName _locID="migapp.office14project">Microsoft Project 2010</displayName>
+        <environment>
+          <variable name="OFFICEPROGRAM">
+            <text>Project</text>
+          </variable>
+        </environment>
+        <role role="Settings">
+          <detection name="Project14" />
+          <detection name="Project14_x64" />
+          <rules>
+            <destinationCleanup>
+              <objectSet>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\MS Project\Options\* [*]</pattern>
+              </objectSet>
+            </destinationCleanup>
+            <include>
+              <objectSet>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\MS Project\* [*]</pattern>
+                <pattern type="File">%CSIDL_APPDATA%\Microsoft\MS Project\14\* [*]</pattern>
+              </objectSet>
+            </include>
+            <merge script="MigXmlHelper.SourcePriority()">
+              <objectSet>
+                <pattern type="File">%CSIDL_APPDATA%\Microsoft\MS Project\14\* [*]</pattern>
+              </objectSet>
+            </merge>
+          </rules>
+          <rules name="Office14to15SettingsUpgrade" />
+          <rules name="Office14to15SettingsUpgrade_x64" />
+        </role>
+      </component>
+
+      <!-- Microsoft Office Publisher 2010 -->
+      <component context="UserAndSystem" type="Application">
+        <displayName _locID="migapp.office14publisher">Microsoft Office Publisher 2010</displayName>
+        <environment>
+          <variable name="OFFICEPROGRAM">
+            <text>Publisher</text>
+          </variable>
+        </environment>
+        <role role="Settings">
+          <detection name="Publisher" />
+          <detection name="Publisher_x64" />
+          <rules>
+            <destinationCleanup>
+              <objectSet>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\Publisher\Preferences\* [*]</pattern>
+              </objectSet>
+            </destinationCleanup>
+            <include>
+              <objectSet>
+                <pattern type="Registry">HKCU\Software\Microsoft\Office\14.0\Publisher\* [*]</pattern>
+                <pattern type="File">%CSIDL_APPDATA%\Microsoft\Publisher\* [*]</pattern>
+                <pattern type="File">%CSIDL_APPDATA%\Microsoft\Publisher Building Blocks\* [*]</pattern>
+              </objectSet>
+            </include>
+            <merge script="MigXmlHelper.SourcePriority()">
+              <objectSet>
+                <pattern type="File">%CSIDL_APPDATA%\Microsoft\Publisher\* [*]</pattern>
+                <pattern type="File">%CSIDL_APPDATA%\Microsoft\Publisher Building Blocks\* [*]</pattern>
+              </objectSet>
+            </merge>
+          </rules>
+          <rules name="Office14to15SettingsUpgrade" />
+          <rules name="Office14to15SettingsUpgrade_x64" />
+        </role>
+      </component>
+
+      <!-- Microsoft Office SmartTags -->
+      <component context="User" type="Application">
+        <displayName _locID="migapp.office14smarttag">Microsoft Office SmartTags</displayName>
+        <role role="Container">
+          <detection name="M

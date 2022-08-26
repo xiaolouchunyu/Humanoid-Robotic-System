@@ -1,0 +1,17 @@
+/usr/bin/cmake: /home/nao_a/pynaoqi/libssl.so.1.0.0: no version information available (required by /usr/lib/x86_64-linux-gnu/libcurl.so.4)
+/usr/bin/cmake: /home/nao_a/pynaoqi/libssl.so.1.0.0: no version information available (required by /usr/lib/x86_64-linux-gnu/libcurl.so.4)
+/usr/bin/cmake: /home/nao_a/pynaoqi/libssl.so.1.0.0: no version information available (required by /usr/lib/x86_64-linux-gnu/libcurl.so.4)
+/usr/bin/cmake: /home/nao_a/pynaoqi/libcrypto.so.1.0.0: no version information available (required by /usr/lib/x86_64-linux-gnu/libcurl.so.4)
+[31m[1mCMake Error[0m at /home/nao_a/hrs_ws/build/tutorial_3/cmake/tutorial_3-genmsg.cmake:3 (message):
+  Could not find messages which
+  '/home/nao_a/hrs_ws/src/tutorial_3/msg/mymsg.msg' depends on.  Did you
+  forget to specify generate_messages(DEPENDENCIES ...)?
+
+  Cannot locate message [float] in package [tutorial_3] with paths
+  [['/home/nao_a/hrs_ws/src/tutorial_3/msg']]
+[36mCall Stack (most recent call first):[0m
+  /opt/ros/kinetic/share/genmsg/cmake/genmsg-extras.cmake:307 (include)
+  CMakeLists.txt:75 (generate_messages)
+
+
+make: *** [cmake_check_build_system] Error 1

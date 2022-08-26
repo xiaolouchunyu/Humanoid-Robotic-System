@@ -1,0 +1,8 @@
+#CREATE request parameters
+
+string[] jointnames
+float64[] angles
+float64[] speeds
+--------------------------------
+#CREATE response parameters
+bool success

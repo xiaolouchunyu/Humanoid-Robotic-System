@@ -1,0 +1,2 @@
+set(tutorial_6_MESSAGE_FILES "/home/nao_a/hrs_ws/src/tutorial_6/msg/aruco_position.msg")
+set(tutorial_6_SERVICE_FILES "/home/nao_a/hrs_ws/src/tutorial_6/srv/MoveJoints.srv;/home/nao_a/hrs_ws/src/tutorial_6/srv/MoveInterpol.srv;/home/nao_a/hrs_ws/src/tutorial_6/srv/getPositions.srv;/home/nao_a/hrs_ws/src/tutorial_6/srv/setPositions.srv;/home/nao_a/hrs_ws/src/tutorial_6/srv/getTransform.srv")

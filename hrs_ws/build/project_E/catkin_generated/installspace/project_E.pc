@@ -1,0 +1,8 @@
+prefix=/home/nao_a/hrs_ws/install
+
+Name: project_E
+Description: Description of project_E
+Version: 0.0.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: actionlib_msgs roscpp std_msgs sensor_msgs nav_msgs geometry_msgs cv_bridge image_transport opencv2 aruco message_runtime

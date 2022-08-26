@@ -1,0 +1,8 @@
+#CREATE request parameters
+
+string jointname
+int8 reference
+--------------------------------
+#CREATE response parameters
+float32[] transform
+bool success

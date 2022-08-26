@@ -1,0 +1,2 @@
+set(nao_control_tutorial_1_MESSAGE_FILES "")
+set(nao_control_tutorial_1_SERVICE_FILES "/home/nao_a/hrs_ws/src/nao_control_tutorial_1/srv/MoveJoints.srv;/home/nao_a/hrs_ws/src/nao_control_tutorial_1/srv/MoveInterpol.srv;/home/nao_a/hrs_ws/src/nao_control_tutorial_1/srv/KillTask.srv")

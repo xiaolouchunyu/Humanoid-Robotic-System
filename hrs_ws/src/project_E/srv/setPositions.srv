@@ -1,0 +1,11 @@
+#CREATE request parameters
+
+string endeffector
+float32[] position
+float32[] orientation 
+float32 speed #setPositions
+float32 time #positionInterpolations
+
+--------------------------------
+#CREATE response parameters
+bool success

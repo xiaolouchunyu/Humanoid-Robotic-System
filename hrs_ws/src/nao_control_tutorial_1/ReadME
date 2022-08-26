@@ -1,0 +1,6 @@
+move_service is the server in python
+client.py is the python client for exercises 1-2
+client.cpp is the cpp client for the 3. exercise
+
+Final settings are the aruco tracking with time interpolation movement and another killer_task node (because couldnt be implemented in cpp)
+Maybe works better with normal setAngles command, which is also depicted in the video.

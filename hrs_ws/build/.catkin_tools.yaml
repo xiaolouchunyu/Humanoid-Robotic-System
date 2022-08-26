@@ -1,0 +1,6 @@
+devel_space: /home/nao_a/hrs_ws/devel
+install: false
+install_space: /home/nao_a/hrs_ws/install
+profile: default
+source_space: /home/nao_a/hrs_ws/src
+workspace: /home/nao_a/hrs_ws

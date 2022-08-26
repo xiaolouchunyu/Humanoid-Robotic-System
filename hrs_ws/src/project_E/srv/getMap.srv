@@ -1,0 +1,6 @@
+#CREATE request parameters
+
+--------------------------------
+#CREATE response parameters
+nav_msgs/Odometry[] objects
+nav_msgs/Odometry[] obstacles

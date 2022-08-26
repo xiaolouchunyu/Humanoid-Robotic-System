@@ -1,0 +1,10 @@
+/usr/bin/cmake: /home/nao_a/pynaoqi/libssl.so.1.0.0: no version information available (required by /usr/lib/x86_64-linux-gnu/libcurl.so.4)
+/usr/bin/cmake: /home/nao_a/pynaoqi/libssl.so.1.0.0: no version information available (required by /usr/lib/x86_64-linux-gnu/libcurl.so.4)
+/usr/bin/cmake: /home/nao_a/pynaoqi/libssl.so.1.0.0: no version information available (required by /usr/lib/x86_64-linux-gnu/libcurl.so.4)
+/usr/bin/cmake: /home/nao_a/pynaoqi/libcrypto.so.1.0.0: no version information available (required by /usr/lib/x86_64-linux-gnu/libcurl.so.4)
+[31m[1mCMake Error[0m at /home/nao_a/hrs_ws/src/tutorial_7/CMakeLists.txt:39 (target_link_libraries):
+  Cannot specify link libraries for target "nao_3" which is not built by this
+  project.
+
+
+make: *** [cmake_check_build_system] Error 1
